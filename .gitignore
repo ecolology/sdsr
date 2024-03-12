@@ -6,3 +6,5 @@ _bookdown_files/
 sds.Rmd
 
 /.quarto/
+/aq/
+.DS_Store

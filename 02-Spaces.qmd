@@ -1,76 +1,77 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
 # Coordinates {#sec-cs}
 
-"_Data are not just numbers, they are numbers with a context_";
-"_In data analysis, context provides meaning_"  [@cobbmoore]
+"*Data are not just numbers, they are numbers with a context*"; "*In
+data analysis, context provides meaning*" [@cobbmoore]
 
-Before we can try to understand geometries like points, lines,
-polygons, coverage and grids, it is useful to review coordinate
-systems so that we have an idea what exactly coordinates of a
-point reflect.  For spatial data, the location of observations
-are characterised by coordinates, and coordinates are defined in
-a coordinate system.  Different coordinate systems can be used for
-this, and the most important difference is whether coordinates are
-defined over a 2 dimensional or 3 dimensional space referenced
-to orthogonal axes (Cartesian coordinates), or using distance
-and directions (polar coordinates, spherical and ellipsoidal
-coordinates). Besides a location of observation, all observations
-are associated with time of observation, and so time coordinate
-systems are also briefly discussed. First we will briefly review
-_quantities_, to learn what units and datum are.
+Before we can try to understand geometries like points, lines, polygons,
+coverage and grids, it is useful to review coordinate systems so that we
+have an idea what exactly coordinates of a point reflect. For spatial
+data, the location of observations are characterised by coordinates, and
+coordinates are defined in a coordinate system. Different coordinate
+systems can be used for this, and the most important difference is
+whether coordinates are defined over a 2 dimensional or 3 dimensional
+space referenced to orthogonal axes (Cartesian coordinates), or using
+distance and directions (polar coordinates, spherical and ellipsoidal
+coordinates). Besides a location of observation, all observations are
+associated with time of observation, and so time coordinate systems are
+also briefly discussed. First we will briefly review *quantities*, to
+learn what units and datum are.
 
 ## Quantities, units, datum {#sec-units}
 
-\index{quantities}
-\index{units}
-\index{measurement units}
+\index{quantities} \index{units} \index{measurement units}
 
-The VIM ("International Vocabulary of Metrology", @vim)
-defines a _quantity_ as a "property of a phenomenon, body, or
-substance, where the property has a magnitude that can be expressed
-as a number and a reference", where "[a] reference can be a measurement
-unit, a measurement procedure, a reference material, or a combination
-of such." Although one could argue about whether all data is
-constituted of quantities, there is no need to argue that proper
-data handling requires that numbers (or symbols) are accompanied
-by information on what they mean, in particular what they refer to.
+The VIM ("International Vocabulary of Metrology", @vim) defines a
+*quantity* as a "property of a phenomenon, body, or substance, where the
+property has a magnitude that can be expressed as a number and a
+reference", where "\[a\] reference can be a measurement unit, a
+measurement procedure, a reference material, or a combination of such."
+Although one could argue about whether all data is constituted of
+quantities, there is no need to argue that proper data handling requires
+that numbers (or symbols) are accompanied by information on what they
+mean, in particular what they refer to.
 
-A measurement system consists of _base units_ for base quantities, and
-_derived units_ for derived quantities. For instance, the SI system
-of units [@SI] consists of seven base units: length (metre,
-m), mass (kilogram, kg), time (second, s), electric current
-(ampere, A), thermodynamic temperature (Kelvin, K), amount of
-substance (mole, mol), and luminous intensity (candela, cd).
-Derived units are composed of products of integer powers of base
-units; examples are speed ($\mbox{m}~\mbox{s}^{-1}$), density
-($\mbox{kg}~\mbox{m}^{-3}$) and area ($\mbox{m}^2$).
+A measurement system consists of *base units* for base quantities, and
+*derived units* for derived quantities. For instance, the SI system of
+units [@SI] consists of seven base units: length (metre, m), mass
+(kilogram, kg), time (second, s), electric current (ampere, A),
+thermodynamic temperature (Kelvin, K), amount of substance (mole, mol),
+and luminous intensity (candela, cd). Derived units are composed of
+products of integer powers of base units; examples are speed
+($\mbox{m}~\mbox{s}^{-1}$), density ($\mbox{kg}~\mbox{m}^{-3}$) and area
+($\mbox{m}^2$).
 
-The special case of unitless measures can refer to either cases
-where units cancel out (for instance mass fraction: kg/kg, or angle measured
-in rad: m/m) or to cases where objects or events were counted
-(such as "5 apples").  Adding an angle to a count of apples would not
-make sense; adding 5 apples to 3 oranges may make sense if the
-result is reinterpreted in terms of a superclass, in this case as _pieces of fruit_.
-Many data variables have units that are not expressible as SI base
-units or derived units. @hand discusses many such measurement scales,
-including those used to measure variables like intelligence in
+The special case of unitless measures can refer to either cases where
+units cancel out (for instance mass fraction: kg/kg, or angle measured
+in rad: m/m) or to cases where objects or events were counted (such as
+"5 apples"). Adding an angle to a count of apples would not make sense;
+adding 5 apples to 3 oranges may make sense if the result is
+reinterpreted in terms of a superclass, in this case as *pieces of
+fruit*. Many data variables have units that are not expressible as SI
+base units or derived units. @hand discusses many such measurement
+scales, including those used to measure variables like intelligence in
 social sciences, in the context of measurement units.
 
-For many quantities, the natural origin of values is zero. This
-works for amounts, where differences between amounts result in
-meaningful negative values. For locations and times, differences
-have a natural zero interpretation: distance and duration.  Absolute
-location (position) and time need a fixed origin, from which we
-can meaningfully measure other absolute space time points: we
-call this **a datum**.
-For space, a datum involves more than one dimension. The combination
-of a datum and a measurement unit (scale) is a _reference system_.
+For many quantities, the natural origin of values is zero. This works
+for amounts, where differences between amounts result in meaningful
+negative values. For locations and times, differences have a natural
+zero interpretation: distance and duration. Absolute location (position)
+and time need a fixed origin, from which we can meaningfully measure
+other absolute space time points: we call this **a datum**. For space, a
+datum involves more than one dimension. The combination of a datum and a
+measurement unit (scale) is a *reference system*.
 
 \index{datum}
 
-We will now elaborate how spatial locations can be expressed as
-either ellipsoidal or Cartesian coordinates.  The next sections will
-deal with temporal and spatial reference systems, and how they are
-handled in R.
+We will now elaborate how spatial locations can be expressed as either
+ellipsoidal or Cartesian coordinates. The next sections will deal with
+temporal and spatial reference systems, and how they are handled in R.
 
 ## Ellipsoidal coordinates
 
@@ -96,36 +97,36 @@ text(3.3, 0.3, label = "x", col = 'blue')
 text(0.3, 4.3, label = "y", col = 'blue')
 ```
 
-@fig-polar  shows both polar and Cartesian coordinates
-for a two-dimensional situation. In Cartesian coordinates,
-the point shown is $(x,y) = (3,4)$, for polar coordinates it is
+@fig-polar shows both polar and Cartesian coordinates for a
+two-dimensional situation. In Cartesian coordinates, the point shown is
+$(x,y) = (3,4)$, for polar coordinates it is
 $(r,\phi) = (5, \mbox{arctan}(4/3))$, where $\mbox{arctan}(4/3)$ is
-approximately $0.93$ radians, or $53^{\circ}$. Note that $x$, $y$
-and $r$ all have length units, where $\phi$ is an angle (a unitless
-length/length ratio). Converting back and forth between Cartesian
-and polar coordinates is trivial, as
+approximately $0.93$ radians, or $53^{\circ}$. Note that $x$, $y$ and
+$r$ all have length units, where $\phi$ is an angle (a unitless
+length/length ratio). Converting back and forth between Cartesian and
+polar coordinates is trivial, as
 $$x = r~\mbox{cos} \phi,\ \ \ y = r~\mbox{sin} \phi, \ \mbox{and}$$
-$$r = \sqrt{x^2 + y^2}, \ \ \ \phi = \mbox{atan2}(y, x)$$
-where $\mbox{atan2}$ is used in favour of $\mbox{atan}(y/x)$ to take care
-of the right quadrant.
+$$r = \sqrt{x^2 + y^2}, \ \ \ \phi = \mbox{atan2}(y, x)$$ where
+$\mbox{atan2}$ is used in favour of $\mbox{atan}(y/x)$ to take care of
+the right quadrant.
 
 ### Spherical or ellipsoidal coordinates
 
-\index{ellipsoidal coordinates}
-\index{coordinates!ellipsoidal}
-\index{coordinates!geocentric}
-\index{coordinates!Cartesian}
+\index{ellipsoidal coordinates} \index{coordinates!ellipsoidal}
+\index{coordinates!geocentric} \index{coordinates!Cartesian}
 
 In three dimensions, where Cartesian coordinates are expressed as
-$(x,y,z)$, spherical coordinates are the three-dimensional equivalent
-of polar coordinates and can be expressed as $(r,\lambda,\phi)$, where:
+$(x,y,z)$, spherical coordinates are the three-dimensional equivalent of
+polar coordinates and can be expressed as $(r,\lambda,\phi)$, where:
 
-* $r$ is the radius of the sphere,
-* $\lambda$ is the longitude, measured in the $(x,y)$ plane counter-clockwise from positive $x$, and
-* $\phi$ is the latitude, the angle between the vector and the $(x,y)$ plane.
+-   $r$ is the radius of the sphere,
+-   $\lambda$ is the longitude, measured in the $(x,y)$ plane
+    counter-clockwise from positive $x$, and
+-   $\phi$ is the latitude, the angle between the vector and the $(x,y)$
+    plane.
 
-@fig-sphere  illustrates Cartesian geocentric and
-ellipsoidal coordinates.
+@fig-sphere illustrates Cartesian geocentric and ellipsoidal
+coordinates.
 
 ```{r fig-sphere, echo=!knitr::is_latex_output()}
 #| fig.cap: "Cartesian geocentric coordinates (left) measure three distances, ellipsoidal coordinates (right) measure two angles, and possibly an ellipsoidal height"
@@ -172,6 +173,7 @@ plot.window(xlim = c(min(circ[,1],na.rm = TRUE), 3607103*1.02),
 lines(circ)
 lines(l0)
 text(l[c(2,5,8),], labels = c("x", "y", "z"), col = 'red')
+
 # add POINT(60 47)
 p <- st_as_sfc("POINT(60 47)", crs = 'OGC:CRS84') |> st_transform("+proj=geocent")
 p <- p[[1]]
@@ -234,47 +236,52 @@ text(pt[1,1]+100000, pt[1,2]+50000, labels = expression(phi), col = 'blue') # la
 text(pt[1,1]+20000, pt[1,2]-50000, labels = expression(lambda), col = 'red') # lng
 ```
 
-$\lambda$ typically varies between $-180^{\circ}$ and $180^{\circ}$
-(or alternatively from $0^{\circ}$ to $360^{\circ}$), $\phi$ from
-$-90^{\circ}$ to $90^{\circ}$.  When we are only interested in points
-_on_ a sphere with given radius, we can drop $r$: $(\lambda,\phi)$
-now suffice to identify any point.
+$\lambda$ typically varies between $-180^{\circ}$ and $180^{\circ}$ (or
+alternatively from $0^{\circ}$ to $360^{\circ}$), $\phi$ from
+$-90^{\circ}$ to $90^{\circ}$. When we are only interested in points
+*on* a sphere with given radius, we can drop $r$: $(\lambda,\phi)$ now
+suffice to identify any point.
 
 \newpage
-It should be noted that this is just _a_ definition, one could for
-instance also choose to measure polar angle, the angle between
-the vector and $z$, instead of latitude. There is also a long
-tradition of specifying points as $(\phi,\lambda)$ but throughout
-this book we will stick to longitude-latitude, $(\lambda,\phi)$.
-The point denoted in @fig-sphere  has $(\lambda,\phi)$ or ellipsoidal
-coordinates with angular values
+
+It should be noted that this is just *a* definition, one could for
+instance also choose to measure polar angle, the angle between the
+vector and $z$, instead of latitude. There is also a long tradition of
+specifying points as $(\phi,\lambda)$ but throughout this book we will
+stick to longitude-latitude, $(\lambda,\phi)$. The point denoted in
+@fig-sphere has $(\lambda,\phi)$ or ellipsoidal coordinates with angular
+values
+
 ```{r echo=!knitr::is_latex_output()}
 #| code-fold: true
 #| collapse: false
 p <- st_as_sfc("POINT(60 47)", crs = 'OGC:CRS84')
 p[[1]]
 ```
+
 measured in degrees, and geocentric coordinates
+
 ```{r echo=!knitr::is_latex_output()}
 #| code-fold: true
 #| collapse: false
 p <- st_as_sfc("POINT(60 47)", crs = 'OGC:CRS84') |> st_transform("+proj=geocent")
 p[[1]]
 ```
+
 measured in metres.
 
 \index{coordinates!units}
 
 For points on an ellipse, there are two ways in which angle can be
 expressed (@fig-ellipse): measured from the centre of the ellipse
-($\psi$), or measured perpendicular to the tangent on the ellipse
-at the target point ($\phi$).
-
+($\psi$), or measured perpendicular to the tangent on the ellipse at the
+target point ($\phi$).
 
 ```{r fig-ellipse, echo=!knitr::is_latex_output() }
 #| out.width: 60%
 #| fig.cap: "Angles on an ellipse: geodetic (blue) and geocentric (red) latitude"
 #| code-fold: true
+par(mfrow = c(1, 1))
 par(mar = rep(0,4))
 x <- 4
 y <- 5/8 * sqrt(48)
@@ -295,113 +302,105 @@ text(1.2, 0.5, label = parse(text = "psi"), col = 'red')
 text(3, 0.5, label = parse(text = "phi"), col = 'blue')
 ```
 
-The most commonly used parametric model for the Earth is _an
-ellipsoid of revolution_, an ellipsoid with two equal semi-axes
-[@iliffelott]. In effect, this is a flattened sphere (or spheroid):
-the distance between the poles is (slightly: about 0.33%) smaller
-than the distance between two opposite points on the equator. Under
-this model, longitude is always measured along a circle (as in
-@fig-sphere), and latitude along an ellipse (as in
-@fig-ellipse). If we
-think of @fig-ellipse  as a cross section of the Earth
-passing through the poles, the _geodetic_ latitude measure $\phi$
-is the one used when no further specification is given. The latitude
-measure $\psi$ is called the _geocentric latitude_.
+The most commonly used parametric model for the Earth is *an ellipsoid
+of revolution*, an ellipsoid with two equal semi-axes [@iliffelott]. In
+effect, this is a flattened sphere (or spheroid): the distance between
+the poles is (slightly: about 0.33%) smaller than the distance between
+two opposite points on the equator. Under this model, longitude is
+always measured along a circle (as in @fig-sphere), and latitude along
+an ellipse (as in @fig-ellipse). If we think of @fig-ellipse as a cross
+section of the Earth passing through the poles, the *geodetic* latitude
+measure $\phi$ is the one used when no further specification is given.
+The latitude measure $\psi$ is called the *geocentric latitude*.
 
-\index{latitude!geodetic}
-\index{latitude!geocentric}
-\index{longitude}
-\index{ellipsoid of revolution}
-\index{altitude}
-\index{altitude!direction}
-\index{coordinates!altitude}
+\index{latitude!geodetic} \index{latitude!geocentric} \index{longitude}
+\index{ellipsoid of revolution} \index{altitude}
+\index{altitude!direction} \index{coordinates!altitude}
 
-we can add _altitude_ or elevation to longitude and latitude to
-define points that are above or below the ellipsoid, and obtain
-a three-dimensional space again. When defining altitude, we need
-to choose:
+we can add *altitude* or elevation to longitude and latitude to define
+points that are above or below the ellipsoid, and obtain a
+three-dimensional space again. When defining altitude, we need to
+choose:
 
-* where zero altitude is: on the ellipsoid, or relative to the surface approximating mean sea level (the geoid)?
-* which direction is positive, and 
-* which direction is "straight up": perpendicular to the ellipsoid surface,
-or in the direction of gravity, perpendicular to the surface of the geoid?
+-   where zero altitude is: on the ellipsoid, or relative to the surface
+    approximating mean sea level (the geoid)?
+-   which direction is positive, and
+-   which direction is "straight up": perpendicular to the ellipsoid
+    surface, or in the direction of gravity, perpendicular to the
+    surface of the geoid?
 
-All these choices may matter, depending on the application area
-and required measurement accuracies.
+All these choices may matter, depending on the application area and
+required measurement accuracies.
 
 The shape of the Earth is not a perfect ellipsoid. As a consequence,
-several ellipsoids with different shape parameters and bound to
-the Earth in different ways are being used. Such ellipsoids are called
-_datums_, and are briefly discussed in @sec-crs, along
-with _coordinate reference systems_.
+several ellipsoids with different shape parameters and bound to the
+Earth in different ways are being used. Such ellipsoids are called
+*datums*, and are briefly discussed in @sec-crs, along with *coordinate
+reference systems*.
 
 ### Projected coordinates, distances {#sec-projections}
 
-Because paper maps and computer screens are much more abundant
-and practical than globes, when we look at spatial
-data we see it _projected_: drawn on a flat, two-dimensional
-surface. Computing the locations in a two-dimensional space means
-that we work with _projected_ coordinates. Projecting ellipsoidal
-coordinates means that shapes, directions, areas, or even all three,
-are distorted [@iliffelott].
+Because paper maps and computer screens are much more abundant and
+practical than globes, when we look at spatial data we see it
+*projected*: drawn on a flat, two-dimensional surface. Computing the
+locations in a two-dimensional space means that we work with *projected*
+coordinates. Projecting ellipsoidal coordinates means that shapes,
+directions, areas, or even all three, are distorted [@iliffelott].
 
-\index{coordinates!projected}
-\index{projection}
+\index{coordinates!projected} \index{projection}
 \index{distance!straight line}
 
-Distances between two points $p_i$ and $p_j$ in Cartesian coordinates are computed
-as Euclidean distances, in two dimensions by
-$$d_{ij} = \sqrt{(x_i-x_j)^2+(y_i-y_j)^2}$$
-with $p_i = (x_i,y_i)$
-and in three dimensions by
-$$d_{ij} = \sqrt{(x_i-x_j)^2+(y_i-y_j)^2+(z_i-z_j)^2}$$
-with $p_i = (x_i,y_i,z_i).$
-These distances represent the length of a _straight_ line between
-two points $i$ and $j$.
+Distances between two points $p_i$ and $p_j$ in Cartesian coordinates
+are computed as Euclidean distances, in two dimensions by
+$$d_{ij} = \sqrt{(x_i-x_j)^2+(y_i-y_j)^2}$$ with $p_i = (x_i,y_i)$ and
+in three dimensions by
+$$d_{ij} = \sqrt{(x_i-x_j)^2+(y_i-y_j)^2+(z_i-z_j)^2}$$ with
+$p_i = (x_i,y_i,z_i).$ These distances represent the length of a
+*straight* line between two points $i$ and $j$.
 
-For two points on a circle, the length of the arc of two points $c_1 = (r,{\phi}_1)$ and
-$c_2 = (r, \phi_2)$ is
-$$s_{ij}=r~|\phi_1-\phi_2| = r ~\theta$$
-with $\theta$ the angle between $\phi_1$ and $\phi_2$ in radians.
-For very small values of $\theta$, we will have $s_{ij} \approx d_{ij}$,
-because a small arc segment is nearly straight.
+For two points on a circle, the length of the arc of two points
+$c_1 = (r,{\phi}_1)$ and $c_2 = (r, \phi_2)$ is
+$$s_{ij}=r~|\phi_1-\phi_2| = r ~\theta$$ with $\theta$ the angle between
+$\phi_1$ and $\phi_2$ in radians. For very small values of $\theta$, we
+will have $s_{ij} \approx d_{ij}$, because a small arc segment is nearly
+straight.
 
 \index{distance!great circle}
 
-For two points $p_1 = (\lambda_1,\phi_1)$ and $p_2 =
-(\lambda_2,\phi_2)$ on a sphere with radius $r'$, the _great circle
-distance_ is the arc length between $p_1$ and $p_2$ on the circle
-that passes through $p_1$ and $p_2$ and has the centre of the sphere as its centre, and
-is given by $s_{12} = r ~ \theta_{12}$ with
+For two points $p_1 = (\lambda_1,\phi_1)$ and $p_2 = (\lambda_2,\phi_2)$
+on a sphere with radius $r'$, the *great circle distance* is the arc
+length between $p_1$ and $p_2$ on the circle that passes through $p_1$
+and $p_2$ and has the centre of the sphere as its centre, and is given
+by $s_{12} = r ~ \theta_{12}$ with
 $$\theta_{12} = \arccos(\sin \phi_1 \cdot \sin \phi_2 + \cos \phi_1 \cdot \cos \phi_2 \cdot \cos(|\lambda_1-\lambda_2|))$$
 the angle between $p_1$ and $p_2$, in radians.
 
-Arc distances between two points on a spheroid are more complicated
-to compute; a good discussion on the topic and an explanation of
-the method implemented in GeographicLib (part of PROJ) is given
-in @karney2013algorithms.
+Arc distances between two points on a spheroid are more complicated to
+compute; a good discussion on the topic and an explanation of the method
+implemented in GeographicLib (part of PROJ) is given in
+@karney2013algorithms.
 
 \index{distance!ellipsoidal}
 
-To show that these distance measures actually give different
-values, we computed them for the distance Berlin - Paris. Here,
-`gc_` refers to ellipsoidal and spherical great circle distances,
-`str_` refers to straight line, Euclidean distances between
-Cartesian geocentric coordinates associated on the WGS84 ellipse
-and sphere:
+To show that these distance measures actually give different values, we
+computed them for the distance Berlin - Paris. Here, `gc_` refers to
+ellipsoidal and spherical great circle distances, `str_` refers to
+straight line, Euclidean distances between Cartesian geocentric
+coordinates associated on the WGS84 ellipse and sphere:
+
 ```{r echo=!knitr::is_latex_output(), message=FALSE}
 #| code-fold: true
 #| collapse: false
 pts <- st_sfc(st_point(c(13.4050, 52.5200)), st_point(c(2.3522, 48.8566)), crs = 'OGC:CRS84')
-s2_orig <- sf_use_s2(FALSE)
-d1 <- c(gc_ellipse = st_distance(pts)[1,2])
-sf_use_s2(TRUE)
+s2_orig <- sf_use_s2(FALSE) # set as FALSE as default (to use s2 lib)
+d1 <- c(gc_ellipse = st_distance(pts)[1,2]) # true 'grand circle distance' for an ellipse (i.e. using cross-section; not quite as accurate)
+sf_use_s2(TRUE) # turn on s2geometry library for spheroid calculations
 # or, without using s2, use st_distance(st_transform(pts, "+proj=cart +ellps=sphere"))
-d2 <- c(gc_sphere = st_distance(pts)[1,2])
-p <- st_transform(pts, "+proj=cart +ellps=WGS84")
-d3 <- c(str_ellipse = units::set_units(sqrt(sum(apply(do.call(cbind, p), 1, diff)^2)), m))
-p2 <- st_transform(pts, "+proj=cart +ellps=sphere")
-d4 <- c(str_sphere = units::set_units(sqrt(sum(apply(do.call(cbind, p2), 1, diff)^2)), m))
+d2 <- c(gc_sphere = st_distance(pts)[1,2]) # true 'grand circle distance' for a spheroid/ellipsoid (most accurate distance)
+p <- st_transform(pts, "+proj=cart +ellps=WGS84") # transform to 2D
+d3 <- c(str_ellipse = units::set_units(sqrt(sum(apply(do.call(cbind, p), 1, diff)^2)), m)) # manually calculate 'as the crow flies' Pythagorean's distance for 3D ellipse
+p2 <- st_transform(pts, "+proj=cart +ellps=sphere") # convert to perfect sphere but project still using cartesian
+d4 <- c(str_sphere = units::set_units(sqrt(sum(apply(do.call(cbind, p2), 1, diff)^2)), m)) # again, calculate distance as the crow flies but using sphere
 res <- c(d1, d3, d2, d4) # note order
 # print as km, re-add names:
 sf_use_s2(s2_orig) # back to what it was before changing
@@ -410,140 +409,142 @@ res |> units::set_units(km) |> setNames(names(res)) |> print(digits = 5)
 
 ### Bounded and unbounded spaces {#sec-bounded}
 
-\index{sphere}
-\index{space!bounded}
-\index{space!unbounded}
+\index{sphere} \index{space!bounded} \index{space!unbounded}
 
-Two-dimensional and three-dimensional Euclidean spaces ($R^2$ and
-$R^3$) are unbounded. Every line in this space has infinite length,
-and areas or volumes have no natural upper limit.  In contrast,
-spaces defined on a circle ($S^1$) or sphere ($S^2$) define a bounded
-set: there may be infinitely many points but the length and area
-of the circle, and the radius, area and volume of a sphere are bounded.
+Two-dimensional and three-dimensional Euclidean spaces ($R^2$ and $R^3$)
+are unbounded. Every line in this space has infinite length, and areas
+or volumes have no natural upper limit. In contrast, spaces defined on a
+circle ($S^1$) or sphere ($S^2$) define a bounded set: there may be
+infinitely many points but the length and area of the circle, and the
+radius, area and volume of a sphere are bounded.
 
-This may sound trivial but leads to some interesting challenges
-when handling spatial data. A polygon on $R^2$ has unambiguously an
-inside and an outside. On a sphere, $S^2$, any polygon divides
-the sphere in two parts, and which of these two is to be considered
-inside and which outside is ambiguous and needs to be defined
-by the traversal direction. @sec-spherical will further discuss
-consequences when working with geometries on $S^2$.
+This may sound trivial but leads to some interesting challenges when
+handling spatial data. A polygon on $R^2$ has unambiguously an inside
+and an outside. On a sphere, $S^2$, any polygon divides the sphere in
+two parts, and which of these two is to be considered inside and which
+outside is ambiguous and needs to be defined by the traversal direction.
+@sec-spherical will further discuss consequences when working with
+geometries on $S^2$.
 
-\index{polygon!on the sphere}
-\index{polygon!inside, outside}
+\index{polygon!on the sphere} \index{polygon!inside, outside}
 
 ## Coordinate reference systems {#sec-crs}
 
 \index{coordinate reference systems}
 
-We follow @lott2015 when defining the following concepts (italics indicate literal quoting):
+We follow @lott2015 when defining the following concepts (italics
+indicate literal quoting):
 
-* a **coordinate system** is a _set of mathematical rules for specifying how coordinates are to be assigned to points_,
-* a **datum** is a _parameter or set of parameters that define the position of the origin, the scale, and the orientation of a coordinate system_, 
-* a **geodetic datum** is a _datum describing the relationship of a two- or three-dimensional coordinate system to the Earth_, and
-* a **coordinate reference system** is a _coordinate system that is related to an object by a datum; for geodetic and vertical datums, the object will be the Earth._
+-   a **coordinate system** is a *set of mathematical rules for
+    specifying how coordinates are to be assigned to points*,
+-   a **datum** is a *parameter or set of parameters that define the
+    position of the origin, the scale, and the orientation of a
+    coordinate system*,
+-   a **geodetic datum** is a *datum describing the relationship of a
+    two- or three-dimensional coordinate system to the Earth*, and
+-   a **coordinate reference system** is a *coordinate system that is
+    related to an object by a datum; for geodetic and vertical datums,
+    the object will be the Earth.*
 
-\index{coordinate system}
-\index{geodetic datum}
+\index{coordinate system} \index{geodetic datum}
 
 A readable text that further explains these concepts is @iliffelott.
 
-The Earth does not follow a regular shape. The topography of the
-Earth is of course known to vary strongly, but also the surface
-formed by constant gravity at mean sea level, the geoid, is
-irregular. A commonly used model that is fit to the geoid is an
-ellipsoid of revolution, which is an ellipse with two identical
-minor axes. Fitting such an ellipsoid to the Earth gives a datum.
-However, fitting it to different areas, or based on different sets of
-reference points gives different fits, and hence different datums:
-a datum can for instance be fixed to a particular tectonic plate
-(like the European Terrestrial Reference System 1989 (ETRS89)), others can be globally fit (like WGS84). More local
-fits lead to smaller approximation errors.
+The Earth does not follow a regular shape. The topography of the Earth
+is of course known to vary strongly, but also the surface formed by
+constant gravity at mean sea level, the geoid, is irregular. A commonly
+used model that is fit to the geoid is an ellipsoid of revolution, which
+is an ellipse with two identical minor axes. Fitting such an ellipsoid
+to the Earth gives a datum. However, fitting it to different areas, or
+based on different sets of reference points gives different fits, and
+hence different datums: a datum can for instance be fixed to a
+particular tectonic plate (like the European Terrestrial Reference
+System 1989 (ETRS89)), others can be globally fit (like WGS84). More
+local fits lead to smaller approximation errors.
 
 \index{geoid}
 
-The definitions above imply that coordinates in degrees longitude
-and latitude only have a meaning and can only be interpreted
-unambiguously as Earth coordinates, when the datum they are
-associated with is given.
+The definitions above imply that coordinates in degrees longitude and
+latitude only have a meaning and can only be interpreted unambiguously
+as Earth coordinates, when the datum they are associated with is given.
 
-Note that for projected data, the data that _were_ projected
-are associated with a reference ellipsoid (datum). Going from
-one projection to another _without_ changing datum is called
-_coordinate conversion_, and passes through the ellipsoidal
-coordinates associated with the datum involved. This process is
-lossless and invertible: the parameters and equations associated
-with a _conversion_ are not empirical. Recomputing coordinates in a
-new datum is called _coordinate transformation_, and is approximate:
-because datums are a result of model fitting, transformations
-between datums are models too that have been fit; the equations
-involved are empirical, and multiple transformation paths, based
-on different model fits and associated with different accuracies,
-are possible.
+Note that for projected data, the data that *were* projected are
+associated with a reference ellipsoid (datum). **Going from one
+projection to another *without* changing datum is called *coordinate
+conversion***, and passes through the ellipsoidal coordinates associated
+with the datum involved. This process is lossless and invertible: the
+parameters and equations associated with a *conversion* are not
+empirical. **Recomputing coordinates in a new datum is called
+*coordinate transformation*, and is approximate**: because datums are a
+result of model fitting, transformations between datums are models too
+that have been fit; the equations involved are empirical, and multiple
+transformation paths, based on different model fits and associated with
+different accuracies, are possible.
 
-\index{coordinate!conversion}
-\index{coordinate!transformation}
+\index{coordinate!conversion} \index{coordinate!transformation}
 
-Plate tectonics imply that within a global datum, fixed objects may
-have coordinates that change over time, and that transformations
-from one datum to another may be time-dependent. Earthquakes are a
-cause of more local and sudden changes in coordinates. Local datums
-may be fixed to tectonic plates (such as ETRS89), or may be dynamic.
+Plate tectonics imply that within a global datum, fixed objects may have
+coordinates that change over time, and that transformations from one
+datum to another may be time-dependent. Earthquakes are a cause of more
+local and sudden changes in coordinates. Local datums may be fixed to
+tectonic plates (such as ETRS89), or may be dynamic.
 
 \index{datum!dynamic}
 
 ## PROJ and mapping accuracy {#sec-projlib}
 
-Very few living people active in open source geospatial software
-can remember the time before PROJ. PROJ [@evenden:90] started in the
-1970s as a Fortran project, and was released in 1985 as a C library
-for cartographic projections. It came with command line tools for
-direct and inverse projections, and could be linked to software
-to let it support (re)projection directly. Originally, datums were
-considered implicit, and no datum transformations were allowed.
+Very few living people active in open source geospatial software can
+remember the time before PROJ. PROJ [@evenden:90] started in the 1970s
+as a Fortran project, and was released in 1985 as a C library for
+cartographic projections. It came with command line tools for direct and
+inverse projections, and could be linked to software to let it support
+(re)projection directly. Originally, datums were considered implicit,
+and no datum transformations were allowed.
 
-\index{PROJ}
-\index{PROJ!PROJ.4}
-\index{PROJ!proj4string}
+\index{PROJ} \index{PROJ!PROJ.4} \index{PROJ!proj4string}
 
 In the early 2000s, PROJ was known as PROJ.4, after its never-changing
-major version number.  Amongst others motivated by the rise of GPS,
-the need for datum transformations increased and PROJ.4 was extended
-with rudimentary datum support. PROJ definitions for coordinate
-reference systems would look like this:
-```
+major version number. Amongst others motivated by the rise of GPS, the
+need for datum transformations increased and PROJ.4 was extended with
+rudimentary datum support. PROJ definitions for coordinate reference
+systems would look like this:
+
+```         
 +proj=utm +zone=33 +datum=WGS84 +units=m +no_defs
 ```
-where _key_=_value_ pairs are preceded by a `+` and separated by
-a space. This form came to be known as "PROJ.4 string", since the
-PROJ project stayed at version 4.x for several decades. Other datums
-would come with fields like:
-```
+
+where *key*=*value* pairs are preceded by a `+` and separated by a
+space. This form came to be known as "PROJ.4 string", since the PROJ
+project stayed at version 4.x for several decades. Other datums would
+come with fields like:
+
+```         
 +ellps=bessel +towgs84=565.4,50.3,465.6,-0.399,0.344,-1.877,4.072
 ```
-indicating another ellipse, as well as the seven (or three)
-parameters for transforming from this ellipse to WGS84 (the "World
-Geodetic System 1984" global datum once popularised by GPS),
-effectively defining the datum in terms of a transformation to WGS84.
+
+indicating another ellipse, as well as the seven (or three) parameters
+for transforming from this ellipse to WGS84 (the "World Geodetic System
+1984" global datum once popularised by GPS), effectively defining the
+datum in terms of a transformation to WGS84.
 
 Along with PROJ.4 came a set of databases with known (registered)
-projections, from which the best known is the European Petroleum Survey Group (EPSG) registry.
-National mapping agencies would provide (and update over time)
-their best guesses of `+towgs84` parameters for national coordinate
-reference systems, and distribute through the EPSG registry,
-which was part of PROJ distributions.
-For some transformations, _datum grids_ were available and
-distributed as part of PROJ.4: such grids are raster maps that provide
-for every location pre-computed values for the shift in longitude
-and latitude, or elevation, for a particular datum transformation.
+projections, from which the best known is the European Petroleum Survey
+Group (EPSG) registry. National mapping agencies would provide (and
+update over time) their best guesses of `+towgs84` parameters for
+national coordinate reference systems, and distribute through the EPSG
+registry, which was part of PROJ distributions. For some
+transformations, *datum grids* were available and distributed as part of
+PROJ.4: such grids are raster maps that provide for every location
+pre-computed values for the shift in longitude and latitude, or
+elevation, for a particular datum transformation.
 
 In PROJ.4, every coordinate transformation had to go through a
-conversion to and from WGS84; even reprojecting data associated with
-a datum different from WGS84 had to go through a transformation to
-and from WGS84. The associated errors of up to 100 m were acceptable
-for mapping purposes for not too small areas, but some applications 
-need higher accuracy transformations. Examples include precision
-agriculture, planning flights of UAV's, or object tracking.
+conversion to and from WGS84; even reprojecting data associated with a
+datum different from WGS84 had to go through a transformation to and
+from WGS84. The associated errors of up to 100 m were acceptable for
+mapping purposes for not too small areas, but some applications need
+higher accuracy transformations. Examples include precision agriculture,
+planning flights of UAV's, or object tracking.
 
 In 2018, after a successful "GDAL Coordinate System Barn Raising"
 initiative, a number of companies profiting from the open source
@@ -552,49 +553,47 @@ mature coordinate transformation system in PROJ. Over a few years,
 PROJ.4 evolved through versions 5, 6, 7, 8 and 9 and was hence renamed
 into PROJ (or PR$\phi$J).
 
-\index{GDAL!barn raising}
-\index{GDAL!datum transformation}
+\index{GDAL!barn raising} \index{GDAL!datum transformation}
 \index{PROJ!datum transformation}
 
 The most notable changes include:
 
-* although PROJ.4 strings can still be used to initialise certain
-coordinate reference systems, they are no longer sufficient to
-represent all of them; a new format, WKT-2 (described in next section)
-replaces it
-* WGS84 as a hub datum is dropped: coordinate transformations no longer
-need to go through a particular datum
-* multiple conversion or transformation paths (so-called pipelines)
-to go from CRS A to CRS B are possible, and can be reported along
-with the associated accuracy; PROJ will by default use the most accurate
-one but user control is possible
-* transformation pipelines can chain an arbitrary number of
-elementary transformation operations, including swapping of axes
-and unit transformations 
-* datum grids, of which there are now _many_ more, are no longer distributed
-with the library but are accessible from a content delivery network (CDN); PROJ allows enabling and
-disabling network access to these grids and only downloads the section(s)
-of the grid actually needed, storing it in a cache on the user's machine for 
-future use 
-* coordinate transformations receive support for epochs, time-dependent
-transformations (and hence: four-dimensional coordinates, including the
-source and target time)
-* the set of files with registered coordinate reference systems is handled
-in an SQLite database
-* instead of always handling axis order (longitude, latitude),
-when the authority defines differently this is now obeyed (but see
-@sec-wkt2 and @sec-axisorder)
+-   although PROJ.4 strings can still be used to initialise certain
+    coordinate reference systems, they are no longer sufficient to
+    represent all of them; a new format, **WKT-2** (described in next
+    section) replaces it
+-   WGS84 as a hub datum is dropped: coordinate transformations no
+    longer need to go through a particular datum
+-   multiple conversion or transformation paths (so-called pipelines) to
+    go from CRS A to CRS B are possible, and can be reported along with
+    the associated accuracy; PROJ will by default use the most accurate
+    one but user control is possible
+-   transformation pipelines can chain an arbitrary number of elementary
+    transformation operations, including swapping of axes and unit
+    transformations
+-   datum grids, of which there are now *many* more, are no longer
+    distributed with the library but are accessible from a content
+    delivery network (CDN); PROJ allows enabling and disabling network
+    access to these grids and only downloads the section(s) of the grid
+    actually needed, storing it in a cache on the user's machine for
+    future use
+-   coordinate transformations receive support for epochs,
+    time-dependent transformations (and hence: four-dimensional
+    coordinates, including the source and target time)
+-   the set of files with registered coordinate reference systems is
+    handled in an SQLite database
+-   instead of always handling axis order (longitude, latitude), when
+    the authority defines differently this is now obeyed (but see
+    @sec-wkt2 and @sec-axisorder)
 
-\index{WKT-2}
-\index{PROJ!WKT-2}
-\index{projection!accuracy}
+\index{WKT-2} \index{PROJ!WKT-2} \index{projection!accuracy}
 
-All these points sound like massive improvements, and accuracies
-of transformation can be below 1 metre. An interesting point
-is the last: Where we could safely assume for many decades that
-spatial data with ellipsoidal coordinates would have axis order
-(longitude, latitude), this is no longer the case. We will see in
-@sec-axisorder how to deal with this.
+All these points sound like massive improvements, and accuracies of
+transformation can be below 1 metre. An interesting point is the last:
+Where we could safely assume for many decades that spatial data with
+ellipsoidal coordinates would have axis order (longitude, latitude),
+this is no longer the case. We will see in @sec-axisorder how to deal
+with this.
 
 \index{datum!grids}
 
@@ -618,7 +617,8 @@ r <- if (file.exists(filename)) {
 hook <- function() {
 		plot(uk, border = "orange", col = NA, add = TRUE)
 }
-plot(r[,,,1:2], axes = TRUE, hook = hook, key.pos = 4)
+plot(r[,,,1:2], axes = TRUE, hook = hook, key.pos = 4) # plot two bands of it!
+# attributes(r)
 ```
 
 ```{r fig-verticalgrid, echo=!knitr::is_latex_output(), message = FALSE}
@@ -635,26 +635,23 @@ plot(h, axes = TRUE, reset = FALSE)
 plot(uk, border = "orange", col = NA, add = TRUE)
 ```
 
-\index{coordinates!axis order}
-\index{axis order}
+\index{coordinates!axis order} \index{axis order}
 
-Examples of a horizontal datum grids, downloaded from cdn.proj.org,
-are shown in @fig-horizontalgrid  and for a vertical
-datum grid in @fig-verticalgrid. Datum grids may carry
-per-pixel accuracy values.
+Examples of a horizontal datum grids, downloaded from cdn.proj.org, are
+shown in @fig-horizontalgrid and for a vertical datum grid in
+@fig-verticalgrid. Datum grids may carry per-pixel accuracy values.
 
 ## WKT-2 {#sec-wkt2}
 
 @lott2015 describes a standard for encoding coordinate reference
-systems, as well as transformations between them using _well-known text_; 
-the standard (and format) is referred to informally as
-WKT-2. As mentioned above, GDAL and PROJ fully support this encoding.
-An example of WKT-2 for CRS `EPSG:4326` is:
+systems, as well as transformations between them using *well-known
+text*; the standard (and format) is referred to informally as WKT-2. As
+mentioned above, GDAL and PROJ fully support this encoding. An example
+of WKT-2 for CRS `EPSG:4326` is:
 
-\index{coordinates!WKT-2}
-\index{WKT-2}
+\index{coordinates!WKT-2} \index{WKT-2}
 
-```
+```         
 GEOGCRS["WGS 84",
     ENSEMBLE["World Geodetic System 1984 ensemble",
         MEMBER["World Geodetic System 1984 (Transit)"],
@@ -682,31 +679,37 @@ GEOGCRS["WGS 84",
         BBOX[-90,-180,90,180]],
     ID["EPSG",4326]]
 ```
-This shows a coordinate system with the axis order _latitude,
-longitude_, although in most practical cases the axis order used is
-_longitude, latitude_.  The _ensemble_ of WGS84 ellipsoids listed
-represents its various updates over time.  Ambiguity about _which_
-of these ensemble members a particular dataset should use leads to
-an uncertainty of several meters. The coordinate reference system
-`OGC:CRS84` disambiguates the axis order and explicitly states it
-to be `longitude, latitude`, and is the recommended alternative to
-WGS84 datasets using this axis order. It does not disambiguate
-the datum ensemble problem.
 
-\index{axis order!disambiguate}
-\index{WGS84}
-\index{OGC:CRS84}
+This shows a coordinate system with the axis order *latitude,
+longitude*, although in most practical cases the axis order used is
+*longitude, latitude*. The *ensemble* of WGS84 ellipsoids listed
+represents its various updates over time. Ambiguity about *which* of
+these ensemble members a particular dataset should use leads to an
+uncertainty of several meters. The coordinate reference system
+`OGC:CRS84` disambiguates the axis order and explicitly states it to be
+`longitude, latitude`, and is the recommended alternative to WGS84
+datasets using this axis order. It does not disambiguate the datum
+ensemble problem.
 
-A longer introduction on the history and recent changes in PROJ
-is given in @rogerCRS, building upon the work of @knudsen+evers17
-and @evers+knudsen17.
+\index{axis order!disambiguate} \index{WGS84} \index{OGC:CRS84}
+
+A longer introduction on the history and recent changes in PROJ is given
+in @rogerCRS, building upon the work of @knudsen+evers17 and
+@evers+knudsen17.
 
 ## Exercises
 
-Try to solve the following exercises with R (without loading packages); try to use functions where appropriate:
+Try to solve the following exercises with R (without loading packages);
+try to use functions where appropriate:
 
-1. list three _geographic_ measures that do not have a natural zero origin
-<!-- latitude, longitude, elevation -->
-2. convert the $(x,y)$ points $(10,2)$, $(-10,-2)$, $(10,-2)$, and $(0,10)$ to polar coordinates
-3. convert the polar $(r,\phi)$ points $(10,45^{\circ})$, $(0,100^{\circ})$, and $(5,359^{\circ})$ to Cartesian coordinates
-4. assuming the Earth is a sphere with a radius of 6371 km, compute for $(\lambda,\phi)$ points the great circle distance between $(10,10)$ and $(11,10)$, between $(10,80)$ and $(11,80)$, between $(10,10)$ and $(10,11)$, and between $(10,80)$ and $(10,81)$ (units: degree). What are the distance units?
+1.  list three *geographic* measures that do not have a natural zero
+    origin <!-- latitude, longitude, elevation -->
+2.  convert the $(x,y)$ points $(10,2)$, $(-10,-2)$, $(10,-2)$, and
+    $(0,10)$ to polar coordinates
+3.  convert the polar $(r,\phi)$ points $(10,45^{\circ})$,
+    $(0,100^{\circ})$, and $(5,359^{\circ})$ to Cartesian coordinates
+4.  assuming the Earth is a sphere with a radius of 6371 km, compute for
+    $(\lambda,\phi)$ points the great circle distance between $(10,10)$
+    and $(11,10)$, between $(10,80)$ and $(11,80)$, between $(10,10)$
+    and $(10,11)$, and between $(10,80)$ and $(10,81)$ (units: degree).
+    What are the distance units?
