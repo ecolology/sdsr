@@ -1566,13 +1566,54 @@ varies.
 Use R to solve the following exercises.
 
 1. Find the names of the `nc` counties that intersect `LINESTRING(-84 35,-78 35)`; use `[` for this, and as an alternative use `st_join` for this.
-1. Repeat this after setting `sf_use_s2(FALSE)`, and _compute_ the difference (hint: use `setdiff`), and colour the counties of the difference using colour '#88000088'.
-1. Plot the two different lines in a single plot; note that R will plot a straight line always straight in the projection currently used; `st_segmentize` can be used to add points on a straight line, or on a great circle for ellipsoidal coordinates.
-1. NDVI, normalised differenced vegetation index, is computed as `(NIR-R)/(NIR+R)`, with NIR the near infrared and R the red band.  Read the `L7_ETMs.tif` file into object `x`, and distribute the band dimensions over attributes by `split(x, "band")`. Then, add attribute NDVI to this object by using an expression that uses the NIR (band 4) and R (band 3) attributes directly.
-1. Compute NDVI for the `L7_ETMs.tif` image by reducing the band dimension, using `st_apply` and a function `ndvi = function(x) { (x[4]-x[3])/(x[4]+x[3]) }`. Plot the result, and write the result to a GeoTIFF. 
-1. Use `st_transform` to transform the `stars` object read from `L7_ETMs.tif` to `OGC:CRS84`. Print the object. Is this a regular grid? Plot the first band using arguments `axes=TRUE` and `border=NA`, and explain why this takes such a long time.
-1. Use `st_warp` to warp the `L7_ETMs.tif` object to `OGC:CRS84`, and plot the resulting object with `axes=TRUE`. Why is the plot created much faster than after `st_transform`?
-1. Using a vector representation of the raster `L7_ETMs`, plot the
+
+```{r}
+# exercise 1
+require(tidyverse); require(sf)
+
+# load nc:
+nc <- system.file("shape/nc.shp", package="sf") %>%
+	read_sf() %>%
+	st_transform('EPSG:2264')
+
+# create a line:
+my_line <-
+	matrix(c(-84, 35, -78, 35), nrow=2, byrow=T) %>%
+	st_linestring() %>% # create linestring of class XY
+	st_sfc(crs = st_crs("+proj=longlat +datum=WGS84 +no_defs")) %>% # start with WGS84 lon-lat coords
+	st_as_sf() %>% # convert sfc -> sf object**
+	st_transform(crs=st_crs(nc))
+
+# Simple subset using square brackets:
+nc_sub <- nc[my_line,]
+
+# second type of subset using st_join
+nc_join <- st_join(nc, my_line, join = st_intersects) %>% suppressWarnings() # doesn't work for some reason...
+
+# Another alternative: get only intersections of line and polygon
+nc_intersect <- st_intersection(my_line, nc) %>% suppressWarnings()
+
+# simple subsetting way:
+plot(st_geometry(nc), col = "white", border = "grey")
+plot(st_geometry(nc_join), add=TRUE, border = "black")
+plot(st_geometry(nc_sub), add=TRUE, col = "pink")
+plot(st_geometry(my_line), add=TRUE, col = "red")
+plot(st_geometry(nc_intersect), add=TRUE, col = "blue")
+
+
+```
+
+
+2. Repeat this after setting `sf_use_s2(FALSE)`, and _compute_ the difference (hint: use `setdiff`), and colour the counties of the difference using colour '#88000088'.
+
+3. Plot the two different lines in a single plot; note that R will plot a straight line always straight in the projection currently used; `st_segmentize` can be used to add points on a straight line, or on a great circle for ellipsoidal coordinates.
+
+4. NDVI, normalised differenced vegetation index, is computed as `(NIR-R)/(NIR+R)`, with NIR the near infrared and R the red band.  Read the `L7_ETMs.tif` file into object `x`, and distribute the band dimensions over attributes by `split(x, "band")`. Then, add attribute NDVI to this object by using an expression that uses the NIR (band 4) and R (band 3) attributes directly.
+
+5. Compute NDVI for the `L7_ETMs.tif` image by reducing the band dimension, using `st_apply` and a function `ndvi = function(x) { (x[4]-x[3])/(x[4]+x[3]) }`. Plot the result, and write the result to a GeoTIFF. 
+6. Use `st_transform` to transform the `stars` object read from `L7_ETMs.tif` to `OGC:CRS84`. Print the object. Is this a regular grid? Plot the first band using arguments `axes=TRUE` and `border=NA`, and explain why this takes such a long time.
+7. Use `st_warp` to warp the `L7_ETMs.tif` object to `OGC:CRS84`, and plot the resulting object with `axes=TRUE`. Why is the plot created much faster than after `st_transform`?
+8. Using a vector representation of the raster `L7_ETMs`, plot the
 intersection with a circular area around `POINT(293716 9113692)` with
 radius 75 m,  and compute the area-weighted mean pixel values for
 this circle.  Compare the area-weighted values with those obtained

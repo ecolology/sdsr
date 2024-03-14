@@ -4,7 +4,12 @@ require(stars)
 
 
 # Single point to sf geometry:
-pt <- st_sfc(st_point(c(0.5, 0.5))) # create points as SF objects (no CRS)
+pt <- c(0.5, 0.5) %>% st_point() %>% st_sfc(crs = NA_character_) # point -> sfg -> sfc (no CRS)
+
+# Single line to sf geometry
+my_line <- matrix(c(-84, 35, -78, 35), nrow=2) %>%
+	st_linestring() %>%
+	st_sfc(crs = st_crs("+proj=longlat +datum=WGS84 +no_defs"))
 
 # Points to sf geometry:
 pts <- data.frame(x = runif(100), y = runif(100)) %>% # simulate random points
