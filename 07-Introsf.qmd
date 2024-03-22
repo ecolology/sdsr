@@ -1568,7 +1568,7 @@ Use R to solve the following exercises.
 1. Find the names of the `nc` counties that intersect `LINESTRING(-84 35,-78 35)`; use `[` for this, and as an alternative use `st_join` for this.
 
 ```{r}
-# exercise 1
+# Chapter 7 Exercise 1
 require(tidyverse); require(sf)
 
 # load nc:
